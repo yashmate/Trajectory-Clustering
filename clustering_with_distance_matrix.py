@@ -46,6 +46,7 @@ def main():
   parser.add_argument("--distances",type=str,help="File Path for the distance matrix csv")
   parser.add_argument("--clusters",type=int,help="Number of clusters",default=1)
   parser.add_argument("--method",type=str,help="Clustering Algorithm",default="agg")
+  parser.add_argument("--device_ids",type=str,help="File path for device ids",default="device_ids_100.csv")
   args = parser.parse_args()
   print(args.distances,args.clusters)
   if args.distances:
@@ -54,7 +55,12 @@ def main():
     distance_matrix = get_default_distances()
   print(distance_matrix)
   print(distance_matrix.shape)
-  print(get_clusters(distance_matrix,args.clusters,args.method))
+  clusters = get_clusters(distance_matrix,args.clusters,args.method)
+  print(clusters)
+  device_df = pd.read_csv(args.device_ids)
+  device_df['Cluster'] = clusters
+  device_df.to_csv(args.device_ids)
+  
 
 main()
 
