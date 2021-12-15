@@ -58,8 +58,8 @@ def main():
   clusters = get_clusters(distance_matrix,args.clusters,args.method)
   print(clusters)
   device_df = pd.read_csv(args.device_ids)
-  device_df['Cluster'] = clusters
-  device_df.to_csv(args.device_ids)
+  device_df['Cluster_{}'.format(args.clusters)] = clusters
+  device_df.to_csv(args.device_ids,index=False)
   
 
 main()
